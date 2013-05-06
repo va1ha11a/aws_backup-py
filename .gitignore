@@ -168,3 +168,4 @@ pip-log.txt
 awsenv
 scratch.py
 example.db
+botocreds.py
