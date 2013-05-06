@@ -15,13 +15,20 @@ for volume in volumes:
     if butime:
         snaps = volume.snapshots()
         for snap in snaps:
-            snap_time =  datetime.datetime.strptime(snap.start_time, boto.utils.ISO8601_MS)
-            snap_due = snap_time + timedelta(hours=butime)
-            due_now = snap_due < datetime.datetime.utcnow()
-        print snaps
+            current_snap_time = datetime.datetime.strptime(snap.start_time, boto.utils.ISO8601_MS)
+            try:
+                if current_snap_time > latest_snap_time:
+                    latest_snap_time = current_snap_time
+            except(NameError):
+                latest_snap_time = current_snap_time
+        
+        snap_due = latest_snap_time + timedelta(hours=butime)
+        due_now = snap_due < datetime.datetime.utcnow()
         if due_now:
-            print "Snapping...(Disabled) " + str(volume.id)
-            #volume.create_snapshot('Auto Snapshot Backup')
+            print "Snapping... " + str(volume.id)
+            volume.create_snapshot('Auto Snapshot Backup')        
+            
+
 
 
             
