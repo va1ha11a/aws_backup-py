@@ -1,5 +1,3 @@
-from datetime import datetime
-from time import sleep
 from apscheduler.scheduler import Scheduler
 
 # Start the scheduler
@@ -10,6 +8,6 @@ sched = Scheduler(standalone=True)
 def my_job():
     print 'text'
 
-print sched.get_jobs()
+
 sched.start()
 sched.shutdown()

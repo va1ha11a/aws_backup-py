@@ -2,13 +2,15 @@ import boto.utils, boto.ec2, time, datetime
 from datetime import timedelta
 from botocreds import aws_access_key_id, aws_secret_access_key
 
-ec2_conn = boto.ec2.connect_to_region("ap-southeast-2", 
+tag_id = "BU"
+target_region = "ap-southeast-2"
+
+
+ec2_conn = boto.ec2.connect_to_region(target_region, 
                                       aws_access_key_id=aws_access_key_id, 
                                       aws_secret_access_key=aws_secret_access_key)
 
 volumes = ec2_conn.get_all_volumes()
-
-tag_id = "BU"
 
 for volume in volumes:
     butime = int(volume.tags.get(tag_id, 0))
@@ -31,7 +33,7 @@ for volume in volumes:
             due_now = True
         if due_now:
             print "Snapping... " + str(volume.id)
-            #volume.create_snapshot('Auto Snapshot Backup')  
+            volume.create_snapshot('Auto Snapshot Backup')  
             
 
 
