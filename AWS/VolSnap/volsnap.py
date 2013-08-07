@@ -1,8 +1,10 @@
-import boto.utils, boto.ec2, time, datetime
+#!/usr/bin/env python
+import boto.utils, boto.ec2, datetime
+import logging
 from datetime import timedelta
 from botocreds import aws_access_key_id, aws_secret_access_key
 
-tag_id = "BU"
+tag_id = "BU-F"
 target_region = "ap-southeast-2"
 
 
@@ -32,8 +34,10 @@ for volume in volumes:
             #Force snapshot if none exists for this volume.
             due_now = True
         if due_now:
-            print "Snapping... " + str(volume.id)
-            volume.create_snapshot('Auto Snapshot Backup')  
+            logging.info("Snapping... " + str(volume.id))
+            volume.create_snapshot('Auto Snapshot Backup')
+        else:
+            logging.debug(str(volume.id) + " not due to snap.")
             
 
 
