@@ -1,5 +1,6 @@
 import unittest
 
+from VolSnap.snaptrim import VolumeSnapTrim
 
 class DayTestCase(unittest.TestCase):
     def setUp(self):
