@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from AWS_utils import AWSUtils
-from policy import defined as defined_policy
+from policy import defined_policy
 
 class DueSnapshots:
     
@@ -14,7 +14,7 @@ class DueSnapshots:
     def select_due(self):
         vols = self._get_vol_list()
         for vol in vols:
-            policy_details = defined_policy[vol["policy"]]
+            policy_details = defined_policy(vol["policy"])
             print policy_details
 
 

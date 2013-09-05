@@ -11,3 +11,6 @@ defined = {
                    },
            
            }
+
+def defined_policy(policy_name):
+    return defined[policy_name]
