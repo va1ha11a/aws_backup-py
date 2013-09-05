@@ -7,7 +7,7 @@ def _ckeckDue(times, time_delta, ref_time):
     if not ref_time:
         ref_time = datetime.datetime.now()
     #Get all snaps since time_delta before ref_time
-    last = next((snap for snap in times if snap[0] > ref_time - time_delta), None)
+    last = next((snap for snap in times if snap["start_time"] > ref_time - time_delta), None)
     # if there are none then snap is due.
     if last:
         return False

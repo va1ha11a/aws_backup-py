@@ -2,13 +2,13 @@ import unittest, datetime
 from VolSnap.utils import isDueDays, isDueHours, isDueWeeks, isDueMonths, isDueYears
 
 class IsDueHourTestCase(unittest.TestCase):
-    hourly_backups = [(datetime.datetime(2013,1,1,21,30), "id-1234"),
-                     (datetime.datetime(2013,1,1,22,30), "id-1235"),
-                     (datetime.datetime(2013,1,1,23,30), "id-1236"),
-                     (datetime.datetime(2013,1,2,0,30), "id-1237"),
-                     (datetime.datetime(2013,1,2,1,30), "id-1238"),
-                     (datetime.datetime(2013,1,2,2,30), "id-1239"),
-                     (datetime.datetime(2013,1,2,3,30), "id-12340"),
+    hourly_backups = [{"start_time":datetime.datetime(2013,1,1,21,30)},
+                     {"start_time":datetime.datetime(2013,1,1,22,30)},
+                     {"start_time":datetime.datetime(2013,1,1,23,30)},
+                     {"start_time":datetime.datetime(2013,1,2,0,30)},
+                     {"start_time":datetime.datetime(2013,1,2,1,30)},
+                     {"start_time":datetime.datetime(2013,1,2,2,30)},
+                     {"start_time":datetime.datetime(2013,1,2,3,30)},
                      ]   
     
     def setUp(self):
@@ -34,13 +34,13 @@ class IsDueHourTestCase(unittest.TestCase):
         
 class IsDueDayTestCase(unittest.TestCase):
     
-    daily_backups = [(datetime.datetime(2013,1,1), "id-1234"),
-                     (datetime.datetime(2013,1,2), "id-1235"),
-                     (datetime.datetime(2013,1,3), "id-1236"),
-                     (datetime.datetime(2013,1,4), "id-1237"),
-                     (datetime.datetime(2013,1,5), "id-1238"),
-                     (datetime.datetime(2013,1,6), "id-1239"),
-                     (datetime.datetime(2013,1,7), "id-12340"),
+    daily_backups = [{"start_time":datetime.datetime(2013,1,1)},
+                     {"start_time":datetime.datetime(2013,1,2)},
+                     {"start_time":datetime.datetime(2013,1,3)},
+                     {"start_time":datetime.datetime(2013,1,4)},
+                     {"start_time":datetime.datetime(2013,1,5)},
+                     {"start_time":datetime.datetime(2013,1,6)},
+                     {"start_time":datetime.datetime(2013,1,7)},
                      ]
     
     def setUp(self):
@@ -70,9 +70,9 @@ class IsDueDayTestCase(unittest.TestCase):
         self.assertEqual(due, True, "Showing days due when it should be due")
         
 class IsDueWeekTestCase(unittest.TestCase):
-    hourly_backups = [(datetime.datetime(2013,1,1,0,30), "id-1234"),
-                     (datetime.datetime(2013,1,8,0,30), "id-1235"),
-                     (datetime.datetime(2013,1,15,0,30), "id-1236"),
+    hourly_backups = [{"start_time":datetime.datetime(2013,1,1,0,30)},
+                     {"start_time":datetime.datetime(2013,1,8,0,30)},
+                     {"start_time":datetime.datetime(2013,1,15,0,30)},
                      ]   
     
     def setUp(self):
@@ -92,9 +92,9 @@ class IsDueWeekTestCase(unittest.TestCase):
         self.assertEqual(due, True, "Showing Weekly not due when it is due.")       
 
 class IsDueMonthTestCase(unittest.TestCase):
-    hourly_backups = [(datetime.datetime(2012,11,1,0,30), "id-1234"),
-                     (datetime.datetime(2012,12,1,0,30), "id-1235"),
-                     (datetime.datetime(2013,1,1,0,30), "id-1236"),
+    hourly_backups = [{"start_time":datetime.datetime(2012,11,1,0,30)},
+                     {"start_time":datetime.datetime(2012,12,1,0,30)},
+                     {"start_time":datetime.datetime(2013,1,1,0,30)},
                      ]   
     
     def setUp(self):
@@ -125,9 +125,9 @@ class IsDueMonthTestCase(unittest.TestCase):
         
         
 class IsDueYearTestCase(unittest.TestCase):
-    hourly_backups = [(datetime.datetime(2010,1,1,0,30), "id-1234"),
-                     (datetime.datetime(2011,1,1,0,30), "id-1235"),
-                     (datetime.datetime(2012,1,1,0,30), "id-1236"),
+    hourly_backups = [{"start_time":datetime.datetime(2010,1,1,0,30)},
+                     {"start_time":datetime.datetime(2011,1,1,0,30)},
+                     {"start_time":datetime.datetime(2012,1,1,0,30)},
                      ]   
     
     def setUp(self):
