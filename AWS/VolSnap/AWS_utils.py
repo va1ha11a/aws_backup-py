@@ -37,11 +37,11 @@ class AWSUtils:
     def create_snap_for_vol(self, volume_id, bu_keys):
         """Create a snapshot and tag as per due"""
         vol_obj = self._ec2_conn.get_all_volumes(volume_id)[0]
-        snap = vol_obj.create_snapshot()
+        snap = vol_obj.create_snapshot(settings.desc)
         for key, value in bu_keys.iteritems():
             if value:
                 snap.add_tag(settings.snap_tags[key], value)
-        return snap
+        return snap.id
 
 if __name__ == "__main__":
     x = AWSUtils()
