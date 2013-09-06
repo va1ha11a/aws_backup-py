@@ -18,7 +18,7 @@ class IsDueHourTestCase(unittest.TestCase):
         pass
 
     def test_Hours_Not_Due_list(self):
-        now = datetime.datetime(2013,1,2,4,29)
+        now = datetime.datetime(2013,1,2,4,14)
         due = isDueHours(self.hourly_backups, 1, now)
         self.assertEqual(due, False, "Showing Hourly due when it is not due.")
 
@@ -137,7 +137,7 @@ class IsDueYearTestCase(unittest.TestCase):
         pass
 
     def test_Months_Not_Due_list(self):
-        now = datetime.datetime(2013,1,1,0,29)
+        now = datetime.datetime(2013,1,1,0,14)
         due = isDueYears(self.hourly_backups, 1, now)
         self.assertEqual(due, False, "Showing Monthly due when it is not due.")
         
