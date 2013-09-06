@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 import datetime
+import settings
 from dateutil.relativedelta import relativedelta
+
+res = datetime.timedelta(minutes=settings.due_resolution_mins)
 
 def _ckeckDue(times, time_delta, ref_time):
     """Generic due checker based on a ref time and time delta"""
     if not ref_time:
         ref_time = datetime.datetime.utcnow()
     #Get all snaps since time_delta before ref_time
-    last = next((snap for snap in times if snap["start_time"] > ref_time - time_delta), None)
+    last = next((snap for snap in times if snap["start_time"] > (ref_time + res) - time_delta), None)
     # if there are none then snap is due.
     if last:
         return False
