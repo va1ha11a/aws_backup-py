@@ -3,7 +3,7 @@
 
 import boto.utils, boto.ec2
 import settings, datetime
-
+import distutils.util
 
 class AWSUtils:
     _ec2_conn = boto.ec2.connect_to_region(settings.target_region, 
@@ -14,6 +14,16 @@ class AWSUtils:
         """Convert aws/boto time into a proper python datetime object"""
         dt = datetime.datetime.strptime(boto_time, boto.utils.ISO8601_MS)
         return dt
+
+    def _get_bu_tags_from_snap(self, snapshot):
+        """Get tags from snapshot to determine the backup level of that snap """
+        tags = {"hourly":distutils.util.strtobool(snapshot.tags.get(settings.hourly_tag, "False")),
+                "daily":distutils.util.strtobool(snapshot.tags.get(settings.daily_tag, "False")),
+                "weekly":distutils.util.strtobool(snapshot.tags.get(settings.weekly_tag, "False")),
+                "monthly":distutils.util.strtobool(snapshot.tags.get(settings.monthly_tag, "False")),
+                "yearly":distutils.util.strtobool(snapshot.tags.get(settings.yearly_tag, "False")),
+                }
+        return tags
 
     def get_vols_for_backup(self):
         """Get a list of all volumes that have the backup enabled tag set to True"""
@@ -26,7 +36,7 @@ class AWSUtils:
         snaps = self._ec2_conn.get_all_snapshots(filters={"volume_id":volume_id, 
                                                           "description":settings.desc, 
                                                           "status":settings.complete_status})
-        snaps_details = [{"id":snap.id, "start_time":self._bt_to_dt(snap.start_time)} for snap in snaps]
+        snaps_details = [{"bu-keys":self._get_bu_tags_from_snap(snap), "id":snap.id, "start_time":self._bt_to_dt(snap.start_time)} for snap in snaps]
         return snaps_details
 
 if __name__ == "__main__":
