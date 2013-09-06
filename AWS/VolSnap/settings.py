@@ -10,8 +10,9 @@ backup_policy_tag = "BU-P"
 #Snapshot Settings:
 desc = "Auto Snapshot Backup"
 complete_status = "completed"
-hourly_tag = "BU-H"
-daily_tag = "BU-D"
-weekly_tag = "BU-W"
-monthly_tag = "BU-M"
-yearly_tag = "BU-Y"
+snap_tags = {"hourly":"BU-H",
+             "daily":"BU-D",
+             "weekly":"BU-W",
+             "monthly":"BU-M",
+             "yearly":"BU-Y",
+             }

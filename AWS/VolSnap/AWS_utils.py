@@ -17,12 +17,7 @@ class AWSUtils:
 
     def _get_bu_tags_from_snap(self, snapshot):
         """Get tags from snapshot to determine the backup level of that snap """
-        tags = {"hourly":distutils.util.strtobool(snapshot.tags.get(settings.hourly_tag, "False")),
-                "daily":distutils.util.strtobool(snapshot.tags.get(settings.daily_tag, "False")),
-                "weekly":distutils.util.strtobool(snapshot.tags.get(settings.weekly_tag, "False")),
-                "monthly":distutils.util.strtobool(snapshot.tags.get(settings.monthly_tag, "False")),
-                "yearly":distutils.util.strtobool(snapshot.tags.get(settings.yearly_tag, "False")),
-                }
+        tags = {bu_tag:distutils.util.strtobool(snapshot.tags.get(val, "False")) for bu_tag, val in settings.snap_tags.iteritems()}
         return tags
 
     def get_vols_for_backup(self):
@@ -38,6 +33,15 @@ class AWSUtils:
                                                           "status":settings.complete_status})
         snaps_details = [{"bu-keys":self._get_bu_tags_from_snap(snap), "id":snap.id, "start_time":self._bt_to_dt(snap.start_time)} for snap in snaps]
         return snaps_details
+
+    def create_snap_for_vol(self, volume_id, bu_keys):
+        """Create a snapshot and tag as per due"""
+        vol_obj = self._ec2_conn.get_all_volumes(volume_id)[0]
+        snap = vol_obj.create_snapshot()
+        for key, value in bu_keys.iteritems():
+            if value:
+                snap.add_tag(settings.snap_tags[key], value)
+        return snap
 
 if __name__ == "__main__":
     x = AWSUtils()
