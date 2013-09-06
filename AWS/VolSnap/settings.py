@@ -16,3 +16,6 @@ snap_tags = {"hourly":"BU-H",
              "monthly":"BU-M",
              "yearly":"BU-Y",
              }
+
+#Scheduling Settings:
+due_resolution_mins = 15
