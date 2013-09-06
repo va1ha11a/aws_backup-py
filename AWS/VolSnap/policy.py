@@ -3,7 +3,7 @@
 them should be stored here"""
 
 defined = {
-           "TEST":{"hourly":(1,24),
+           "STD":{"hourly":(1,24),
                    "daily":(1,31),
                    "weekly":(1,12),
                    "monthly":(1,12),
