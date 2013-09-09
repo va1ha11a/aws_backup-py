@@ -13,4 +13,7 @@ defined = {
            }
 
 def defined_policy(policy_name):
-    return defined[policy_name]
+    try:
+        return defined[policy_name]
+    except:
+        return None
