@@ -1,4 +1,4 @@
-from VolSnap.botocreds import aws_access_key_id, aws_secret_access_key
+from botocreds import aws_access_key_id, aws_secret_access_key
 
 #AWS Connection Settings:
 target_region = "ap-southeast-2"
