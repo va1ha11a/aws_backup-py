@@ -27,6 +27,8 @@ class BackupSnapshots:
         vols = self.AWS.get_vols_for_backup()
         for vol in vols:
             policy_details = defined_policy(vol["policy"])
+            if policy_details == None:
+                continue
             due = self._check_vol_snaps(vol, policy_details)
             any_due = bool([bu for bu, isdue in due.iteritems() if isdue])
             if any_due:
