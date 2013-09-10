@@ -43,7 +43,15 @@ class SnapUtils:
                 snap.add_tag(settings.snap_tags[key], value)
         return snap.id
 
-
+class MailUtils:
+    """Utilities for woring with email via the AWS SES interface"""
+    _ses_conn = boto.ses.connect_to_region(settings.ses_region, 
+                                            aws_access_key_id=settings.aws_access_key_id, 
+                                            aws_secret_access_key=settings.aws_secret_access_key)
+    def send_mail(self, *args, **kwargs):
+        """Function to send mail"""
+        result = self._ses_conn.send_email(*args, **kwargs)
+        return result
 
 
 if __name__ == "__main__":

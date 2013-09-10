@@ -2,6 +2,7 @@ from botocreds import aws_access_key_id, aws_secret_access_key
 
 #AWS Connection Settings:
 target_region = "ap-southeast-2"
+ses_region = 'us-east-1'
 
 #Volume Settings:
 backup_enabled_tag = "BU-E"
