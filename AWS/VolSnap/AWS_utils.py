@@ -5,7 +5,7 @@ import boto.utils, boto.ec2
 import settings, datetime
 import distutils.util
 
-class AWSUtils:
+class SnapUtils:
     _ec2_conn = boto.ec2.connect_to_region(settings.target_region, 
                                           aws_access_key_id=settings.aws_access_key_id, 
                                           aws_secret_access_key=settings.aws_secret_access_key)
@@ -43,8 +43,11 @@ class AWSUtils:
                 snap.add_tag(settings.snap_tags[key], value)
         return snap.id
 
+
+
+
 if __name__ == "__main__":
-    x = AWSUtils()
+    x = SnapUtils()
     vols = x.get_vols_for_backup()
     y = x.get_snaps_for_vol(vols[0]["id"])
     print vols

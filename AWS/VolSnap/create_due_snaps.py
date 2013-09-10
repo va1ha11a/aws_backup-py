@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from AWS_utils import AWSUtils
+from AWS_utils import SnapUtils
 from utils import isDueHours, isDueDays, isDueWeeks, isDueMonths, isDueYears
 from policy import defined_policy
 
@@ -18,7 +18,7 @@ class BackupSnapshots:
     
     def __init__(self):
         """Set up the AWS object"""
-        self.AWS = AWSUtils()
+        self.AWS = SnapUtils()
         
     def select_due(self):
         """Generate a list of volumes with snapshots due.
