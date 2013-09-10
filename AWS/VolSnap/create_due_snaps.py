@@ -57,5 +57,5 @@ class BackupSnapshots:
         return due_list
         
 if __name__ == "__main__":
-    x = BackupSnapshots()
-    print x.create_due_snapshots()
+    SnapAll = BackupSnapshots()
+    SnapAll.create_due_snapshots()
