@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-import datetime
-import settings
-from dateutil.relativedelta import relativedelta
 
 import logging
 logger = logging.getLogger(__name__)
-logger.addHandler(logging.StreamHandler())
+
+import datetime
+import settings
+from dateutil.relativedelta import relativedelta
 
 res = datetime.timedelta(minutes=settings.due_resolution_mins)
 

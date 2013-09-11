@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
+import logging
+logger = logging.getLogger(__name__)
+
 from AWS_utils import SnapUtils
 from utils import due_lookup_function_map
 from policy import defined_policy
-
-from utils import logger
 
 class BackupSnapshots:
     """Select snapshots that are due and create them.
@@ -56,7 +57,8 @@ def main():
     """Main Program: Runs creation of all snapshots that are due."""
     SnapAll = BackupSnapshots()
     SnapAll.create_due_snapshots()
-        
+
+     
 if __name__ == "__main__":
-    logger.critical("This is a test message only")
+    pass
     #main()

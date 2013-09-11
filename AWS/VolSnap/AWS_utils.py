@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 """"Utils that connect to AWS"""
 
+import logging
+logger = logging.getLogger(__name__)
+
 import boto.utils, boto.ec2, boto.ses
 import settings, datetime
 import distutils.util
-
-from utils import logger
 
 class SnapUtils:
     _ec2_conn = boto.ec2.connect_to_region(settings.target_region, 
