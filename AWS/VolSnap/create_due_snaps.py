@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from AWS_utils import SnapUtils
-from utils import isDueHours, isDueDays, isDueWeeks, isDueMonths, isDueYears
+from utils import due_lookup_function_map
 from policy import defined_policy
 
 import logging
@@ -12,12 +12,7 @@ class BackupSnapshots:
     Tag them to match the due snapshot types."""
     
     """Map isDue check functions to the keys"""
-    _due_lookup = {"hourly":isDueHours,
-                   "daily":isDueDays,
-                   "weekly":isDueWeeks,
-                   "monthly":isDueMonths,
-                   "yearly":isDueYears,
-                   }
+    _due_lookup = due_lookup_function_map
     
     def __init__(self):
         """Set up the AWS object"""
@@ -39,7 +34,7 @@ class BackupSnapshots:
         return due_vols
 
     def create_due_snapshots(self):
-        """Create due snapshots and tag appropriatly."""
+        """Create due snapshots and tag appropriately."""
         new_snaps = []
         due_vols = self.select_due()
         for volume, due in due_vols.iteritems():
@@ -54,7 +49,7 @@ class BackupSnapshots:
         return [snap for snap in snapshots if snap['bu-keys'][bu_key]]
             
     def _check_vol_snaps(self, volume, policy):
-        """Check a specific volume for due snapshots agains the specified backup policy"""
+        """Check a specific volume for due snapshots against the specified backup policy"""
         snaps =  self.AWS.get_snaps_for_vol(volume["id"])
         due_list = {bu_level:due_func(self._choose_snaps(snaps, bu_level), policy[bu_level][0]) for bu_level, due_func in self._due_lookup.iteritems()}
         return due_list
