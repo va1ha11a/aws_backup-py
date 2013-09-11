@@ -7,13 +7,6 @@ import logging
 logger = logging.getLogger(__name__)
 res = datetime.timedelta(minutes=settings.due_resolution_mins)
 
-due_lookup_function_map = {"hourly":isDueHours,
-                           "daily":isDueDays,
-                           "weekly":isDueWeeks,
-                           "monthly":isDueMonths,
-                           "yearly":isDueYears,
-                           }
-
 def _ckeckDue(times, time_delta, ref_time):
     """Generic due checker based on a ref time and time delta"""
     if not ref_time:
@@ -51,4 +44,9 @@ def isDueYears(times, years=1, ref_time=None):
     time_delta = relativedelta(years=years)
     return _ckeckDue(times, time_delta, ref_time)
 
-
+due_lookup_function_map = {"hourly":isDueHours,
+                           "daily":isDueDays,
+                           "weekly":isDueWeeks,
+                           "monthly":isDueMonths,
+                           "yearly":isDueYears,
+                           }
