@@ -53,7 +53,11 @@ class BackupSnapshots:
         snaps =  self.AWS.get_snaps_for_vol(volume["id"])
         due_list = {bu_level:due_func(self._choose_snaps(snaps, bu_level), policy[bu_level][0]) for bu_level, due_func in self._due_lookup.iteritems()}
         return due_list
-        
-if __name__ == "__main__":
+
+def main():
+    """Main Program: Runs creation of all snapshots that are due."""
     SnapAll = BackupSnapshots()
     SnapAll.create_due_snapshots()
+        
+if __name__ == "__main__":
+    main()
