@@ -2,6 +2,9 @@
 """"Backup policy processor. Definitions for backups policies or how to generated 
 them should be stored here"""
 
+import logging
+logger = logging.getLogger(__name__)
+
 defined = {
            "STD":{"hourly":(1,24),
                    "daily":(1,31),

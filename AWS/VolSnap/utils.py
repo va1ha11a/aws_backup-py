@@ -3,6 +3,8 @@ import datetime
 import settings
 from dateutil.relativedelta import relativedelta
 
+import logging
+logger = logging.getLogger(__name__)
 res = datetime.timedelta(minutes=settings.due_resolution_mins)
 
 def _ckeckDue(times, time_delta, ref_time):

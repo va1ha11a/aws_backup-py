@@ -4,6 +4,9 @@ from AWS_utils import SnapUtils
 from utils import isDueHours, isDueDays, isDueWeeks, isDueMonths, isDueYears
 from policy import defined_policy
 
+import logging
+logger = logging.getLogger(__name__)
+
 class BackupSnapshots:
     """Select snapshots that are due and create them.
     Tag them to match the due snapshot types."""
