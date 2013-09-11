@@ -2,8 +2,7 @@
 """"Backup policy processor. Definitions for backups policies or how to generated 
 them should be stored here"""
 
-import logging
-logger = logging.getLogger(__name__)
+from utils import logger
 
 defined = {
            "STD":{"hourly":(1,24),
@@ -20,3 +19,4 @@ def defined_policy(policy_name):
         return defined[policy_name]
     except:
         return None
+    

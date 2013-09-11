@@ -4,8 +4,7 @@ from AWS_utils import SnapUtils
 from utils import due_lookup_function_map
 from policy import defined_policy
 
-import logging
-logger = logging.getLogger(__name__)
+from utils import logger
 
 class BackupSnapshots:
     """Select snapshots that are due and create them.
@@ -41,7 +40,6 @@ class BackupSnapshots:
             snap_id = self.AWS.create_snap_for_vol(volume, due)
             new_snaps.append(snap_id)
         return new_snaps
-        
  
     def _choose_snaps(self, snapshots, bu_key):
         """Filter snapshots by backup key. This allows for checking by key
@@ -60,4 +58,5 @@ def main():
     SnapAll.create_due_snapshots()
         
 if __name__ == "__main__":
-    main()
+    logger.critical("This is a test message only")
+    #main()

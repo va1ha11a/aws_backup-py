@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 """"Utils that connect to AWS"""
 
-import boto.utils, boto.ec2
+import boto.utils, boto.ec2, boto.ses
 import settings, datetime
 import distutils.util
 
-import logging
-logger = logging.getLogger(__name__)
+from utils import logger
 
 class SnapUtils:
     _ec2_conn = boto.ec2.connect_to_region(settings.target_region, 
@@ -47,7 +46,7 @@ class SnapUtils:
         return snap.id
 
 class MailUtils:
-    """Utilities for woring with email via the AWS SES interface"""
+    """Utilities for working with email via the AWS SES interface"""
     _ses_conn = boto.ses.connect_to_region(settings.ses_region, 
                                             aws_access_key_id=settings.aws_access_key_id, 
                                             aws_secret_access_key=settings.aws_secret_access_key)
