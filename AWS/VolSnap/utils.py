@@ -11,6 +11,10 @@ res = datetime.timedelta(minutes=settings.due_resolution_mins)
 
 def _ckeckDue(times, time_delta, ref_time):
     """Generic due checker based on a ref time and time delta"""
+    logging.debug("Checking due time")
+    logging.debug("due times: " + str(times))
+    logging.debug("time delta: " + str(time_delta))
+    logging.debug("Reference time: " + str(ref_time))
     if not ref_time:
         ref_time = datetime.datetime.utcnow()
     #Get all snaps since time_delta before ref_time

@@ -24,9 +24,12 @@ class BackupSnapshots:
         due_vols = {}
         vols = self.AWS.get_vols_for_backup()
         for vol in vols:
+            logger.info("Getting Policy details for volume: " + str(vol))
             policy_details = defined_policy(vol["policy"])
             if policy_details == None:
+                logger.warning("No Policy details found for volume: " + str(vol))
                 continue
+            logging.info("Checking Due snapshots for volume: " + str(vol))
             due = self._check_vol_snaps(vol, policy_details)
             any_due = bool([bu for bu, isdue in due.iteritems() if isdue])
             if any_due:
@@ -37,9 +40,11 @@ class BackupSnapshots:
         """Create due snapshots and tag appropriately."""
         new_snaps = []
         due_vols = self.select_due()
+        logger.info("Creating Snapshots for due volumes")
         for volume, due in due_vols.iteritems():
             snap_id = self.AWS.create_snap_for_vol(volume, due)
             new_snaps.append(snap_id)
+            logging.info("Snapshot created for volume: "+ str(volume))
         return new_snaps
  
     def _choose_snaps(self, snapshots, bu_key):
@@ -55,8 +60,10 @@ class BackupSnapshots:
 
 def main():
     """Main Program: Runs creation of all snapshots that are due."""
+    logging.info("Creating main object")
     SnapAll = BackupSnapshots()
-    SnapAll.create_due_snapshots()
+    created = SnapAll.create_due_snapshots()
+    return created
 
      
 if __name__ == "__main__":
