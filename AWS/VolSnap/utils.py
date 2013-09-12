@@ -9,9 +9,7 @@ from dateutil.relativedelta import relativedelta
 
 res = datetime.timedelta(minutes=settings.due_resolution_mins)
 
-
-
-def generate_expiry_date(created_date, bu_keys, policy_details):
+def generate_expiry_date(bu_keys, policy_details, created_date=datetime.datetime.now()):
     """Generate and expiry date for a snapshot based on its created date 
     and the policy details of the policy it is in"""
     timeframe_map = {"hourly":"hours",
