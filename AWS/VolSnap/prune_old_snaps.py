@@ -17,5 +17,4 @@ class PruneSnapshots:
         return [snap for snap in snapshots if snap['bu-keys'][bu_key]]
     
 if __name__ == "__main__":
-    x = PruneSnapshots()
-    print x.AWS.get_snaps_for_vol("vol-bb77fd89")
+    pass
