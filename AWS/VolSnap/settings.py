@@ -20,3 +20,8 @@ snap_tags = {"hourly":"BU-H",
 
 #Scheduling Settings:
 due_resolution_mins = 15
+
+#Logging
+import logging
+log_file_name = "VolSnap.log" 
+log_level = logging.INFO
