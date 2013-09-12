@@ -9,6 +9,26 @@ from dateutil.relativedelta import relativedelta
 
 res = datetime.timedelta(minutes=settings.due_resolution_mins)
 
+
+
+def generate_expiry_date(created_date, bu_keys, policy_details):
+    """Generate and expiry date for a snapshot based on its created date 
+    and the policy details of the policy it is in"""
+    timeframe_map = {"hourly":"hours",
+           "daily":"days",
+           "weekly":"weeks",
+           "monthly":"months",
+           "yearly":"years",
+           }
+    furthest_date = created_date
+    for timeframe, value in bu_keys.iteritems():
+        if value:
+            count = policy_details[timeframe][0] * policy_details[timeframe][1]
+            test_date = created_date + relativedelta(**{timeframe_map[timeframe]:count})
+            if furthest_date < test_date:
+                furthest_date = test_date
+    return furthest_date
+
 def _ckeckDue(times, time_delta, ref_time):
     """Generic due checker based on a ref time and time delta"""
     logging.debug("Checking due time")
