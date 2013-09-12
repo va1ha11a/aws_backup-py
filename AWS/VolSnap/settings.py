@@ -17,6 +17,7 @@ snap_tags = {"hourly":"BU-H",
              "monthly":"BU-M",
              "yearly":"BU-Y",
              }
+expiry_tag = "BU-X"
 
 #Scheduling Settings:
 due_resolution_mins = 15
