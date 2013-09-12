@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 """"Backup policy processor. Definitions for backups policies or how to generated 
-them should be stored here"""
+them should be stored here
+results for each time period should give a tuple with the first item being how
+often to take the snapshot and a second item for how many of them to keep.
+for example "hourly":(1,24) would take a snapshot every 1 hour and keep 24 of 
+them before pruning.
+"""
 
 import logging
 logger = logging.getLogger(__name__)
