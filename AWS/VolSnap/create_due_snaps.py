@@ -51,11 +51,18 @@ class BackupSnapshots:
         """Filter snapshots by backup key. This allows for checking by key
         i.e. only could other monthly snapshots when checking for monthly snaps due."""
         return [snap for snap in snapshots if snap['bu-keys'][bu_key]]
+
+    def _pass_policy_or_false(self, status, policy):
+        if status:
+            return policy
+        else:
+            return status
             
     def _check_vol_snaps(self, volume, policy):
         """Check a specific volume for due snapshots against the specified backup policy"""
         snaps =  self.AWS.get_snaps_for_vol(volume["id"])
-        due_list = {bu_level:due_func(self._choose_snaps(snaps, bu_level), policy[bu_level][0]) for bu_level, due_func in self._due_lookup.iteritems()}
+        due_list = {bu_level:self._pass_policy_or_false(due_func(self._choose_snaps(snaps, bu_level), policy[bu_level][0]), policy[bu_level])
+                        for bu_level, due_func in self._due_lookup.iteritems()}
         return due_list
 
 def main():

@@ -9,7 +9,7 @@ from dateutil.relativedelta import relativedelta
 
 res = datetime.timedelta(minutes=settings.due_resolution_mins)
 
-def generate_expiry_date(bu_keys, policy_details, created_date=datetime.datetime.now()):
+def generate_expiry_date(bu_keys, created_date=datetime.datetime.utcnow()):
     """Generate and expiry date for a snapshot based on its created date 
     and the policy details of the policy it is in"""
     timeframe_map = {"hourly":"hours",
@@ -21,7 +21,7 @@ def generate_expiry_date(bu_keys, policy_details, created_date=datetime.datetime
     furthest_date = created_date
     for timeframe, value in bu_keys.iteritems():
         if value:
-            count = policy_details[timeframe][0] * policy_details[timeframe][1]
+            count = bu_keys[timeframe][0] * bu_keys[timeframe][1]
             test_date = created_date + relativedelta(**{timeframe_map[timeframe]:count})
             if furthest_date < test_date:
                 furthest_date = test_date

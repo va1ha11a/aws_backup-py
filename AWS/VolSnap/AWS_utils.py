@@ -7,6 +7,7 @@ logger = logging.getLogger(__name__)
 import boto.utils, boto.ec2, boto.ses
 import settings, datetime
 import distutils.util
+from utils import generate_expiry_date
 
 class SnapUtils:
     _ec2_conn = boto.ec2.connect_to_region(settings.target_region, 
@@ -25,6 +26,19 @@ class SnapUtils:
         tags = {bu_tag:distutils.util.strtobool(snapshot.tags.get(val, "False")) for bu_tag, val in settings.snap_tags.iteritems()}
         return tags
 
+    def _get_expiry_from_snap(self, snapshot):
+        logger.info("Getting expiry tag from snapshot: " + str(snapshot))
+        expiry = snapshot.tags.get(settings.expiry_tag)
+        if expiry:
+            expiry = datetime.datetime.strptime(expiry, "%Y-%m-%d %H:%M:%S.%f")
+        return expiry
+    
+    def get_all_vols(self):
+        """Get a complete list of all volume ids in AWS"""
+        logger.info("Getting list of volumes")
+        all_vols = self._ec2_conn.get_all_volumes()
+        return [vol.id for vol in all_vols]
+    
     def get_vols_for_backup(self):
         """Get a list of all volumes that have the backup enabled tag set to True"""
         logger.info("Getting list of volumes with backup enabled")
@@ -38,8 +52,19 @@ class SnapUtils:
         snaps = self._ec2_conn.get_all_snapshots(filters={"volume_id":volume_id, 
                                                           "description":settings.desc, 
                                                           "status":settings.complete_status})
-        snaps_details = [{"bu-keys":self._get_bu_tags_from_snap(snap), "id":snap.id, "start_time":self._bt_to_dt(snap.start_time)} for snap in snaps]
+        snaps_details = [{"bu-keys":self._get_bu_tags_from_snap(snap),
+                          "expiry":self._get_expiry_from_snap(snap), 
+                          "id":snap.id, 
+                          "start_time":self._bt_to_dt(snap.start_time)} 
+                         for snap in snaps]
         return snaps_details
+
+    def delete_snapshot(self, snap_id, dry_run=False):
+        snapshot = self._ec2_conn.get_all_snapshots(filters={'snapshot_id':snap_id})[0]
+        if not dry_run:
+            return snapshot.delete()
+        else:
+            return None
 
     def create_snap_for_vol(self, volume_id, bu_keys):
         """Create a snapshot and tag as per due"""
@@ -49,7 +74,8 @@ class SnapUtils:
         snap = vol_obj.create_snapshot(settings.desc)
         for key, value in bu_keys.iteritems():
             if value:
-                snap.add_tag(settings.snap_tags[key], value)
+                snap.add_tag(settings.snap_tags[key], True)
+        snap.add_tag(settings.expiry_tag, generate_expiry_date(bu_keys))
         return snap.id
 
 class MailUtils:
