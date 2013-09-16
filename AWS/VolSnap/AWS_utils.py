@@ -52,7 +52,7 @@ class SnapUtils:
         snaps = self._ec2_conn.get_all_snapshots(filters={"volume_id":volume_id, 
                                                           "description":settings.desc, 
                                                           "status":settings.complete_status})
-        snaps_details = [{"bu-keys":self._get_bu_tags_from_snap(snap),
+        snaps_details = [{"bu_keys":self._get_bu_tags_from_snap(snap),
                           "expiry":self._get_expiry_from_snap(snap), 
                           "id":snap.id, 
                           "start_time":self._bt_to_dt(snap.start_time)} 
