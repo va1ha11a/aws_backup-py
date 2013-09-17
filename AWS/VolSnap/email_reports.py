@@ -24,6 +24,7 @@ generic_template = Template("""
 </table>
 </body>
 </html>
+
 """)
 
 def expires_tomorrow():
