@@ -26,3 +26,8 @@ due_resolution_mins = 15
 import logging
 log_file_name = "VolSnap.log" 
 log_level = logging.INFO
+
+#Reporting
+email_from = "it_admins@nsml.com.au"
+email_to = ["it_admins@nsml.com.au"]
+
