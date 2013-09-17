@@ -1,7 +1,7 @@
 """Generate emails from reports to alert admins to potential issues"""
 
 from jinja2 import Template
-from reports import expires_future
+from reports import expires_future, latest_snap_all_vols
 import settings
 import datetime
 from dateutil.relativedelta import relativedelta
@@ -40,10 +40,32 @@ def expires_tomorrow():
                                      doc_heading=doc_heading)
     return result
 
+def vols_not_snapped_today():
+    """Create a list of vols that have not had snapshots in the last day."""
+    latest = latest_snap_all_vols()
+    now_utc = datetime.datetime.utcnow()
+    yesterday_utc = now_utc - relativedelta(days=1)
+    details = [{'vol_id':vol, 'last':date} for vol, date in latest.iteritems() if date == None or date < yesterday_utc]
+    cols = ['vol_id', 'last']
+    headers = ['Volume ID', 'Last Snapshot Time']
+    doc_heading = "AWS Volumes with no successfull snapshots since: %s (UTC)" % (str(yesterday_utc)) 
+    result = generic_template.render(details=details, 
+                                     cols=cols, 
+                                     headers=headers, 
+                                     doc_heading=doc_heading)
+    return result
+
 def main():
+    results = []
     mailer = MailUtils()
+    
     html = expires_tomorrow()
-    return mailer.send_mail(settings.email_from, "Expiry Report", html, settings.email_to, html_body=html)
+    results.append(mailer.send_mail(settings.email_from, "Expiry Report", html, settings.email_to, html_body=html))
+    
+    html = vols_not_snapped_today()
+    results.append(mailer.send_mail(settings.email_from, "Missing Snapshots Report", html, settings.email_to, html_body=html))
+    
+    return results 
 
  
 if __name__ == "__main__":
