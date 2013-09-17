@@ -28,6 +28,7 @@ log_file_name = "VolSnap.log"
 log_level = logging.INFO
 
 #Reporting
+enabled_reports = ["Missing Snapshots Report"]
 email_from = "it_admins@nsml.com.au"
 email_to = ["it_admins@nsml.com.au"]
 

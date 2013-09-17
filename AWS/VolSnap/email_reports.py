@@ -41,7 +41,7 @@ def expires_tomorrow():
     return result
 
 def vols_not_snapped_today():
-    """Create a list of vols that have not had snapshots in the last day."""
+    """Create a HTML list of vols that have not had snapshots in the last day."""
     latest = latest_snap_all_vols()
     now_utc = datetime.datetime.utcnow()
     yesterday_utc = now_utc - relativedelta(days=1)
@@ -55,15 +55,22 @@ def vols_not_snapped_today():
                                      doc_heading=doc_heading)
     return result
 
+def mail_report(title, func, mailer):
+    """Mail a report given its HTML generation function and title."""
+    html = func()
+    results = mailer.send_mail(settings.email_from, title, html, settings.email_to, html_body=html)
+    return results
+
+report_map = {"Expiry Report":expires_tomorrow,
+              "Missing Snapshots Report":vols_not_snapped_today}
+
 def main():
     results = []
     mailer = MailUtils()
     
-    html = expires_tomorrow()
-    results.append(mailer.send_mail(settings.email_from, "Expiry Report", html, settings.email_to, html_body=html))
-    
-    html = vols_not_snapped_today()
-    results.append(mailer.send_mail(settings.email_from, "Missing Snapshots Report", html, settings.email_to, html_body=html))
+    for title in settings.enabled_reports:
+        func = report_map[title]
+        results.append(mail_report(title, func, mailer))
     
     return results 
 
