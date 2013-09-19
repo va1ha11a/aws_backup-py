@@ -30,7 +30,10 @@ class SnapUtils:
         logger.info("Getting expiry tag from snapshot: " + str(snapshot))
         expiry = snapshot.tags.get(settings.expiry_tag)
         if expiry:
-            expiry = datetime.datetime.strptime(expiry, "%Y-%m-%d %H:%M:%S.%f")
+            try:
+                expiry = datetime.datetime.strptime(expiry, "%Y-%m-%d %H:%M:%S.%f")
+            except ValueError:
+                expiry = datetime.datetime.strptime(expiry, "%Y-%m-%d %H:%M:%S")
         return expiry
     
     def get_all_vols(self):
