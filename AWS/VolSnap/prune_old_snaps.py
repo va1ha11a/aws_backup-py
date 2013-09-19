@@ -28,6 +28,7 @@ class PruneSnapshots:
         """Delete snapshots that are past expiry"""
         expired_snaps = self.get_snaps_past_expiry()
         for snap in expired_snaps:
+            logger.warning("Deleting Snapshot:" + snap['id'])
             self.AWS.delete_snapshot(snap['id'], dry_run=False)
         return expired_snaps
 
