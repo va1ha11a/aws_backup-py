@@ -13,6 +13,7 @@ class PruneSnapshots:
 
     def get_snaps_past_expiry(self, ref_time=datetime.datetime.utcnow()):
         """generate a list of snapshots that are past expiry"""
+        logger.info("Attempting to get Snapshots that are past expiry.")
         all_vols = self.AWS.get_all_vols()
         expired_snaps = []
         for vol in all_vols:
