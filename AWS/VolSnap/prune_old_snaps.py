@@ -32,8 +32,8 @@ class PruneSnapshots:
         return expired_snaps
 
 def main():
-    x = PruneSnapshots()
-    return x.delete_expired_snapshots()
+    PruneSnap_obj = PruneSnapshots()
+    return PruneSnap_obj.delete_expired_snapshots()
     
 if __name__ == "__main__":
     main()
