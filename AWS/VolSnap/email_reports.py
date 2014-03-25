@@ -1,7 +1,7 @@
 """Generate emails from reports to alert admins to potential issues"""
 
 from jinja2 import Template
-from reports import expires_future, latest_snap_all_vols
+from reports import expires_future, latest_snap_current_vols
 import settings
 import datetime
 from dateutil.relativedelta import relativedelta
@@ -43,7 +43,7 @@ def expires_tomorrow():
 
 def vols_not_snapped_today():
     """Create a HTML list of vols that have not had snapshots in the last day."""
-    latest = latest_snap_all_vols()
+    latest = latest_snap_current_vols()
     now_utc = datetime.datetime.utcnow()
     yesterday_utc = now_utc - relativedelta(days=1)
     details = [{'vol_id':vol, 'last':date} for vol, date in latest.iteritems() if date == None or date < yesterday_utc]

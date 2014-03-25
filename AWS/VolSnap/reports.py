@@ -31,6 +31,13 @@ def latest_snap_all_vols():
         vol_latest[vol] = _get_latest(vol)
     return vol_latest
 
+def latest_snap_current_vols():
+    vol_latest = {}
+    vols = [vol['id'] for vol in snap_obj.get_vols_for_backup()]
+    for vol in vols:
+        vol_latest[vol] = _get_latest(vol)
+    return vol_latest
+
 if __name__ == "__main__":
-    print latest_snap_all_vols()
+    print latest_snap_current_vols()
     
