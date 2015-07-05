@@ -13,6 +13,6 @@ if __name__ == "__main__":
         logger.critical("Exception Occurred:")
         logger.critical(exc)
         #TODO: send some kind of alert 
-        #Possibly email to alert that the whole process is stuffed
+        ##Possibly email to alert that the whole process is stuffed
     else:
         logger.info("Created Snapshots: " + str(result))
