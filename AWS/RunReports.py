@@ -8,7 +8,7 @@ logger.propagate = False
 
 if __name__ == "__main__":
     try:
-        result = email_reports.main()    
+        result = email_reports.main()
     except Exception, exc:
         logger.critical("Exception Occurred:")
         logger.critical(exc)

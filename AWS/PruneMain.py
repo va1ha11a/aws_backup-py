@@ -8,7 +8,7 @@ logger.propagate = False
 
 if __name__ == "__main__":
     try:
-        result = prune_old_snaps.main()    
+        result = prune_old_snaps.main()
     except Exception, exc:
         logger.critical("Exception Occurred:")
         logger.critical(exc)

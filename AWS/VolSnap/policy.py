@@ -11,14 +11,15 @@ import logging
 logger = logging.getLogger(__name__)
 
 defined = {
-           "STD":{"hourly":(1,24),
-                   "daily":(1,31),
-                   "weekly":(1,12),
-                   "monthly":(1,12),
-                   "yearly":(1,7),
-                   },
-           
-           }
+    "STD": {
+        "hourly": (1, 24),
+        "daily": (1, 31),
+        "weekly": (1, 12),
+        "monthly": (1, 12),
+        "yearly": (1, 7),
+    },
+}
+
 
 def defined_policy(policy_name):
     """Get policy details for defined policies"""
@@ -28,4 +29,3 @@ def defined_policy(policy_name):
     except:
         logger.warning("Policy details not found for policy: " + policy_name)
         return None
-    

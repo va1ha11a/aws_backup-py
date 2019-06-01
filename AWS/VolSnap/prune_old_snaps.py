@@ -5,8 +5,8 @@ logger = logging.getLogger(__name__)
 
 from AWS_utils import SnapUtils
 
+
 class PruneSnapshots:
-    
     def __init__(self):
         """Set up the AWS object"""
         self.AWS = SnapUtils()
@@ -24,7 +24,7 @@ class PruneSnapshots:
                     if expiry < ref_time:
                         expired_snaps.append(snap)
         return expired_snaps
-    
+
     def delete_expired_snapshots(self):
         """Delete snapshots that are past expiry"""
         expired_snaps = self.get_snaps_past_expiry()
@@ -33,9 +33,11 @@ class PruneSnapshots:
             self.AWS.delete_snapshot(snap['id'], dry_run=False)
         return expired_snaps
 
+
 def main():
     PruneSnap_obj = PruneSnapshots()
     return PruneSnap_obj.delete_expired_snapshots()
-    
+
+
 if __name__ == "__main__":
     main()
