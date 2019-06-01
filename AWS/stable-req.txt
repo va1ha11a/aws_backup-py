@@ -1,7 +1,0 @@
-APScheduler==2.1.0
-Jinja2==2.7.1
-MarkupSafe==0.18
-boto==2.9.2
-mock==1.0.1
-python-dateutil==2.1
-six==1.4.1
