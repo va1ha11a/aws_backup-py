@@ -170,3 +170,4 @@ scratch.py
 example.db
 botocreds.py
 scratch/
+.vscode/settings.json
