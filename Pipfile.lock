@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a5cc89067eca126ea63fcba365630ef8256e13e5104b1d0fd350644e05626fd4"
+            "sha256": "77547a552e05e7bcb96e6c738e01ad05bacb03b1b45e44cc04f1a1c0adefbb98"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -32,17 +32,18 @@
         },
         "jinja2": {
             "hashes": [
-                "sha256:5cc0a087a81dca1c08368482fb7a92fe2bdd8cfbb22bc0fccfe6c85affb04c8b"
+                "sha256:065c4f02ebe7f7cf559e49ee5a95fb800a9e4528727aec6f24402a5374c65013",
+                "sha256:14dd6caf1527abb21f08f86c784eac40853ba93edb79552aa1e4b8aef1b61c7b"
             ],
             "index": "pypi",
-            "version": "==2.7.1"
+            "version": "==2.10.1"
         },
         "markupsafe": {
             "hashes": [
-                "sha256:b7d5d688bdd345bfa897777d297756688cf02e1b3742c56885e2e5c2b996ff82"
+                "sha256:a4ec1aff59b95a14b45eb2e23761a0179e98319da5a7eb76b56ea8cdc7b871c3"
             ],
             "index": "pypi",
-            "version": "==0.18"
+            "version": "==0.23"
         },
         "mock": {
             "hashes": [
@@ -67,5 +68,14 @@
             "version": "==1.4.1"
         }
     },
-    "develop": {}
+    "develop": {
+        "yapf": {
+            "hashes": [
+                "sha256:34f6f80c446dcb2c44bd644c4037a2024b6645e293a4c9c4521983dd0bb247a1",
+                "sha256:613deba14233623ff3432d9d5032631b5f600be97b39f66932cbe67648bfa8ea"
+            ],
+            "index": "pypi",
+            "version": "==0.27.0"
+        }
+    }
 }
